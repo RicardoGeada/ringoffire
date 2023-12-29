@@ -11,7 +11,8 @@ import { Game } from '../../models/game';
 })
 export class GameComponent {
   pickCardAnimation = false;
-  game: {} = Game;
+  currentCard: string | undefined = '' ;
+  game = new Game();
 
   constructor() {
     this.newGame();
@@ -23,7 +24,12 @@ export class GameComponent {
   }
 
   takeCard() {
-    this.pickCardAnimation = true;
+    if (!this.pickCardAnimation) {
+      this.currentCard = this.game.stack.pop(); 
+      this.pickCardAnimation = true;
+      setTimeout(() => {
+        this.pickCardAnimation = false;
+      }, 1500);
+    }
   }
-
 }
