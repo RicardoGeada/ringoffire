@@ -15,10 +15,10 @@ button {
   }
 }
 
-@mixin dFlex($fdir: row) {
+@mixin dFlex($fdir: row, $jc: center, $ai: center, $g: 8px) {
   display: flex;
   flex-direction: $fdir;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $g;
 }
