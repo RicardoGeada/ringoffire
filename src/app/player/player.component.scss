@@ -1,19 +1,23 @@
-@import './../../styles.scss';
+@import "./../../styles.scss";
 
 .player {
-    padding: 8px;
-    background-color: orange;
-    border-radius: 50px 0 0 50px;
-    width: 300px; 
-    @include dFlex($jc: flex-start,$g: 16px); 
-    img {
-        width: 80px;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-        border-radius: 100%;
-    }
-    .name {
-        font-size: 24px;
-        font-weight: 700;
-    }
+  padding: 8px;
+  background-color: rgba(175, 175, 175, 0.8);
+  border-radius: 50px 0 0 50px;
+  width: 300px;
+  @include dFlex($jc: flex-start, $g: 16px);
+  img {
+    width: 50px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 100%;
+  }
+  .name {
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+.player-active {
+  background-color: orange !important;
 }
