@@ -2,6 +2,10 @@
 
 .start-screen {
     background-color: #404040;
+    background-image: url('/assets/img/start-screen.jpg');
+    background-repeat: none;
+    background-size: cover;
+    background-position: center;
     width: 100vw;
     height: 100vh;
     max-width: 100%;
@@ -11,12 +15,12 @@
         font-size: 2.986rem;
     };
     button {
-        background-color: #dcbd34;
+        background-color: rgb(252,162,0);
         padding: 8px;
         border-radius: 8px;
         font-weight: 700;
         &:hover {
-            background-color: #eccf4a;
+            background-color: rgb(253,201,3);
         }
     }
 }

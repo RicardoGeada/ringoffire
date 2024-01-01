@@ -19,8 +19,8 @@ export class GameInfoComponent {
     { title: 'Questions Only', description: 'The person who draws this card can only communicate by asking questions. Anyone who responds with a statement instead of a question drinks.', },
     { title: 'Two Truths and a Lie', description:'The person who draws this card says three statements about themselves: two true and one false. The others guess which is the lie. Those who guess incorrectly drink.', },
     { title: 'Finish Your Drink', description:'Everyone must finish their drink immediately.', },
-    { title: 'Buddy Up', description: 'Choose a partner. Whenever one of you drinks, the other must drink as well.', },
     { title: 'Social', description:'Everyone drinks.', },
+    { title: 'Buddy Up', description: 'Choose a partner. Whenever one of you drinks, the other must drink as well.', },
     { title: "King's Cup", description: "Pour a portion of your drink into a central cup. The person who draws the last king card must drink the contents of the King's Cup.", },
     { title: 'Make a Rule', description: 'The person who draws this card gets to create a new rule that lasts until the end of the game.', },
   ];
@@ -28,6 +28,7 @@ export class GameInfoComponent {
   title: string = '';
   description: string = '';
   @Input() card: string = '';
+  @Input() playersCount: number = 0;
 
   ngOnChanges(): void {
     if (this.card) {
@@ -36,6 +37,12 @@ export class GameInfoComponent {
       let cardNumber = +this.card.split('_')[1];
       this.title = this.cardAction[cardNumber - 1].title;
       this.description = this.cardAction[cardNumber - 1].description;
+    } else if (this.playersCount < 2) {
+      this.title = 'Add 2 Players';
+      this.description = `Don't drink alone.`;
+    } else {
+      this.title = 'Pick a card';
+      this.description = 'Please click on the card stack to select the next card.';
     }
   }
 }

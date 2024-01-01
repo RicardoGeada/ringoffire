@@ -1,5 +1,20 @@
 @import './../../styles.scss';
 
+.players {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    max-width: 100%;
+    overflow-y: hidden;
+    @include dFlex($fdir: column,$jc: flex-start,$ai: flex-end);
+    pointer-events: none;
+    padding: 32px 0 104px 0;
+}
+
 .field {
     width: 100vw;
     height: 100vh;
@@ -49,10 +64,6 @@
     }
 }
 
-.player-position {
-    position: absolute;
-    right: 0; 
-}
 
 .btn-add {
     position: absolute;
@@ -63,6 +74,6 @@
 .pin-bottom {
     position: absolute;
     bottom: 32px;
-    left: 100px;
-    right: 100px;
+    left: 32px;
+    right: 104px;
 }
