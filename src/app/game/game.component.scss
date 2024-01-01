@@ -1,4 +1,4 @@
-@import './../../styles.scss';
+@import './../../styles/mixin.scss';
 
 .players {
     position: absolute;
@@ -19,7 +19,7 @@
     width: 100vw;
     height: 100vh;
     max-width: 100%;
-    background-image: url('/assets/img/wood-background.jpg');
+    background-image: url('../../assets/img/wood-background.jpg');
     background-position: center;
     background-repeat: none;
     background-size: cover;

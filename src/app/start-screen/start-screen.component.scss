@@ -1,8 +1,8 @@
-@import './../../styles.scss';
+@import './../../styles/mixin.scss';
 
 .start-screen {
     background-color: #404040;
-    background-image: url('/assets/img/start-screen.jpg');
+    background-image: url('../../assets/img/start-screen.jpg');
     background-repeat: none;
     background-size: cover;
     background-position: center;

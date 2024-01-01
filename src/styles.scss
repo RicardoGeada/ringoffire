@@ -6,23 +6,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  // font-size: 16px;
-}
-
-// button {
-//   background-color: transparent;
-//   border: none;
-//   &:hover {
-//     cursor: pointer;
-//   }
-// }
-
-@mixin dFlex($fdir: row, $jc: center, $ai: center, $g: 8px) {
-  display: flex;
-  flex-direction: $fdir;
-  justify-content: $jc;
-  align-items: $ai;
-  gap: $g;
 }
 
 html, body { height: 100%; }
