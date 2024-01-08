@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { Game } from '../../models/game';
 
 @Injectable({
@@ -9,15 +9,10 @@ export class GameInfoService{
 
   firestore: Firestore = inject(Firestore);
 
-  unsubGames;
-
   constructor() { 
-    this.unsubGames = this.subGamesList();
   }
 
   ngOnDestroy() {
-    this.unsubGames();
-    console.log('Unsubbed on Destroy');
   }
 
   getGamesRef() {
@@ -35,11 +30,15 @@ export class GameInfoService{
   }
 
   // READ
-  subGamesList() {
-    return onSnapshot(this.getGamesRef(), (list) => {
-      list.forEach((game) => {
-        console.log('Game: ', game.data());
-      })
-    })
+  subGame(id: string, game: Game) {
+    const docRef = doc(this.firestore, 'games', id);
+    return onSnapshot(docRef, (doc) => {
+      console.log('Game update', doc.data());
+      let cloudData: any = doc.data();
+      game.currentPlayer = cloudData.currentPlayer;
+      game.players = cloudData.players;
+      game.stack = cloudData.stack;
+      game.playedCards = cloudData.playedCards;
+    });
   }
 }

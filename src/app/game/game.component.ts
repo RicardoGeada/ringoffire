@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
 import { GameInfoService } from '../firebase-services/game-info.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -22,17 +23,23 @@ export class GameComponent implements OnDestroy{
   currentCard: string = '' ;
   game = new Game();
 
-  constructor(private gameinfoService: GameInfoService ,public dialog: MatDialog) {
+  unsubGame: any;
+
+  constructor(private gameinfoService: GameInfoService , private route: ActivatedRoute,public dialog: MatDialog) {
     this.newGame();
+    this.route.params.subscribe((params) => {
+      console.log('Game Id: ',params['id']);
+      this.unsubGame = this.gameinfoService.subGame(params['id'], this.game);
+    });
   }
 
   ngOnDestroy(): void {
-    this.gameinfoService.ngOnDestroy();
+    this.unsubGame();
   }
 
   newGame() {
     this.game = new Game();
-    this.gameinfoService.addGame(this.game.toJson());
+    // this.gameinfoService.addGame(this.game.toJson());
   }
 
   takeCard() {
