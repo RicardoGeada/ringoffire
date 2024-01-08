@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, importProvidersFrom } from '@angular/core';
 import { Game } from '../../models/game';
 import { PlayerComponent } from '../player/player.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
+import { GameInfoService } from '../firebase-services/game-info.service';
 
 @Component({
   selector: 'app-game',
@@ -16,17 +17,22 @@ import { GameInfoComponent } from '../game-info/game-info.component';
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
-export class GameComponent {
+export class GameComponent implements OnDestroy{
   pickCardAnimation = false;
   currentCard: string = '' ;
   game = new Game();
 
-  constructor(public dialog: MatDialog) {
+  constructor(private gameinfoService: GameInfoService ,public dialog: MatDialog) {
     this.newGame();
+  }
+
+  ngOnDestroy(): void {
+    this.gameinfoService.ngOnDestroy();
   }
 
   newGame() {
     this.game = new Game();
+    this.gameinfoService.addGame(this.game.toJson());
   }
 
   takeCard() {
