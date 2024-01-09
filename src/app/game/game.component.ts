@@ -14,21 +14,34 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, MatDialogModule, GameInfoComponent],
+  imports: [
+    CommonModule,
+    PlayerComponent,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    GameInfoComponent,
+  ],
   templateUrl: './game.component.html',
-  styleUrl: './game.component.scss'
+  styleUrl: './game.component.scss',
 })
-export class GameComponent implements OnDestroy{
+export class GameComponent implements OnDestroy {
   pickCardAnimation = false;
-  currentCard: string = '' ;
+  currentCard: string = '';
   game = new Game();
+  gameId: string = '';
 
   unsubGame: any;
 
-  constructor(private gameinfoService: GameInfoService , private route: ActivatedRoute,public dialog: MatDialog) {
+  constructor(
+    private gameinfoService: GameInfoService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog
+  ) {
     this.newGame();
     this.route.params.subscribe((params) => {
-      console.log('Game Id: ',params['id']);
+      console.log('Game Id: ', params['id']);
+      this.gameId = params['id'];
       this.unsubGame = this.gameinfoService.subGame(params['id'], this.game);
     });
   }
@@ -45,13 +58,18 @@ export class GameComponent implements OnDestroy{
     if (this.game.players.length >= 2) {
       if (!this.pickCardAnimation) {
         let x = this.game.stack.pop();
-        this.currentCard = x != undefined ? x : ''; 
+        this.currentCard = x != undefined ? x : '';
         this.pickCardAnimation = true;
+        this.gameinfoService.updateGame(this.gameId, this.game);
         this.game.currentPlayer++;
-        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+        this.game.currentPlayer =
+          this.game.currentPlayer % this.game.players.length;
         setTimeout(() => {
           this.game.playedCards.push(this.currentCard);
-          setTimeout(() => this.pickCardAnimation = false, 100);
+          setTimeout(() => {
+            this.pickCardAnimation = false;
+            this.gameinfoService.updateGame(this.gameId, this.game);
+          }, 100);
         }, 1000);
       }
     }
@@ -63,6 +81,7 @@ export class GameComponent implements OnDestroy{
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.gameinfoService.updateGame(this.gameId, this.game);
       }
     });
   }

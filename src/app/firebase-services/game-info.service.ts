@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, onSnapshot, updateDoc } from '@angular/fire/firestore';
 import { Game } from '../../models/game';
 import { Router } from '@angular/router';
 
@@ -31,6 +31,7 @@ export class GameInfoService{
     })
   }
 
+
   // READ
   subGame(id: string, game: Game) {
     const docRef = doc(this.firestore, 'games', id);
@@ -42,5 +43,14 @@ export class GameInfoService{
       game.stack = cloudData.stack;
       game.playedCards = cloudData.playedCards;
     });
+  }
+
+
+  // UPDATE
+  async updateGame(id: string, game: Game) {
+    const docRef = doc(this.firestore, 'games', id); 
+    await updateDoc(docRef, game.toJson()).catch((err) => {
+      console.error(err);
+    })
   }
 }
