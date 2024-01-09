@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, addDoc, collection, doc, onSnapshot, getDoc } from '@angular/fire/firestore';
 import { Game } from '../../models/game';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class GameInfoService{
 
   firestore: Firestore = inject(Firestore);
 
-  constructor() { 
+  constructor(private router: Router) { 
   }
 
   ngOnDestroy() {
@@ -24,8 +25,9 @@ export class GameInfoService{
     let ref = this.getGamesRef();
     await addDoc(ref, game).catch((err) => {
       console.error(err);
-    }).then((docRef) => {
-      console.log('Document written with ID: ', docRef?.id);
+    }).then((gameInfo: any) => {
+      // console.log('Document written with ID: ', gameInfo.id);
+      this.router.navigateByUrl('/game/' + gameInfo.id);
     })
   }
 

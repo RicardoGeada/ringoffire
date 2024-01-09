@@ -39,7 +39,6 @@ export class GameComponent implements OnDestroy{
 
   newGame() {
     this.game = new Game();
-    // this.gameinfoService.addGame(this.game.toJson());
   }
 
   takeCard() {
